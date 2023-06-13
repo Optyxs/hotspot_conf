@@ -14,7 +14,6 @@ if [ "$answer" = "y" ]; then
     sudo ifconfig -s
 fi
 
-
 read -p "Choose wifi interface for hotspot: " val_wifi
 sudo sed -i "s/interface=wlan0/interface=$val_wifi/" hostapd.conf
 
@@ -48,21 +47,20 @@ if [ -s "/tmp/interfaces.txt" ]; then
     answer=""
     read -p "Do you want to rm wpa_supplicant.conf ? (y/n) " answer
     if [ "$answer" = "y" ]; then
-	sudo rm /etc/wpa_supplicant/wpa_supplicant.conf
+        sudo rm /etc/wpa_supplicant/wpa_supplicant.conf
     fi
-    
 else
-    echo "No valid interface, are you sure you are connected to internet ?"
-    echo "exiting without installing"
+    echo "No valid interface, are you sure you are connected to the internet?"
+    echo "Exiting without installing"
     exit
 fi
 
 sudo cp dnsmasq.conf /etc/dnsmasq.conf
 sudo cp hostapd_script.sh /etc/init.d/hostapd-script.sh
 sudo cp rc.local /etc/rc.local
-sudo cp hostapd.conf /etc/hostapd/hostapd.conf 
+sudo cp hostapd.conf /etc/hostapd/hostapd.conf
 
-read -p "Done installing, you should reboot, do you wish to reboot ? (y/n)" answer
+read -p "Done installing. You should reboot. Do you wish to reboot? (y/n)" answer
 
 if [ "$answer" = "y" ]; then
     sudo reboot
