@@ -24,7 +24,7 @@ sudo sed -i "s/ssid=relay/ssid=$val/" hostapd.conf
 read -p "Choose password for hotspot : " val
 sudo sed -i "s/wpa_passphrase=optyxs44/wpa_passphrase=$val/" hostapd.conf
 
-sudo python find_interface.py
+sudo python3 find_interface.py
 
 if [ -s "/tmp/interfaces.txt" ]; then
     sudo cat /tmp/interfaces.txt
@@ -60,4 +60,10 @@ fi
 sudo cp dnsmasq.conf /etc/dnsmasq.conf
 sudo cp hostapd_script.sh /etc/init.d/hostapd-script.sh
 sudo cp rc.local /etc/rc.local
-sudo cp hostapd.conf /etc/hostapd/hostapd.conf
+sudo cp hostapd.conf /etc/hostapd/hostapd.conf 
+
+read -p "Done installing, you should reboot, do you wish to reboot ? (y/n)" answer
+
+if [ "$answer" = "y" ]; then
+    sudo reboot
+fi
