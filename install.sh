@@ -34,15 +34,15 @@ if [ -s "/tmp/interfaces.txt" ]; then
     sudo sed -i "s/ifconfig eth0 192.168.1.13 netmask 255.255.255.0 up/ifconfig $val_source $ip_address netmask $subnet_mask up/" hostapd_script.sh
     sudo sed -i "s/ifconfig wlan0 192.168.2.2 netmask 255.255.255.0 up/ifconfig $val_wifi 192.168.2.2 netmask 255.255.255.0 up/" hostapd_script.sh
     new_last_octet="2"
-    modified_ip=$(echo "$ip_address" | sed "s/\.[0-9]\+$/.$new_last_octet/")
+    modified_ip=$(echo "$ip_address" | sed "s/\\.[0-9]\+$/.$new_last_octet/")
     sudo sed -i "s/ifconfig br0 192.168.1.2 netmask 255.255.255.0/ifconfig br0 $modified_ip netmask $subnet_mask/" hostapd_script.sh
     new_last_octet="0"
-    modified_ip=$(echo "$ip_address" | sed "s/\.[0-9]\+$/.$new_last_octet/")
+    modified_ip=$(echo "$ip_address" | sed "s/\\.[0-9]\+$/.$new_last_octet/")
     sudo sed -i "s/iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -j MASQUERADE &/iptables -t nat -A POSTROUTING -s $modified_ip/24 -j MASQUERADE &/" hostapd_script.sh
     new_last_octet="3"
-    start=$(echo "$ip_address" | sed "s/\.[0-9]\+$/.$new_last_octet/")
+    start=$(echo "$ip_address" | sed "s/\\.[0-9]\+$/.$new_last_octet/")
     new_last_octet="100"
-    end=$(echo "$ip_address" | sed "s/\.[0-9]\+$/.$new_last_octet/")
+    end=$(echo "$ip_address" | sed "s/\\.[0-9]\+$/.$new_last_octet/")
     sudo sed -i "s/dhcp-range=192.168.1.3,192.168.1.100,255.255.255.0,12h/dhcp-range=$start,$end,$subnet_mask,12h/" dnsmasq.conf
     answer=""
     read -p "Do you want to rm wpa_supplicant.conf ? (y/n) " answer
