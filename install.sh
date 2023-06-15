@@ -36,7 +36,7 @@ if [ -s "/tmp/interfaces.txt" ]; then
     sudo sed -i "s/192.168.1.0\/24/$modified_ip.0\/24/" hostapd_script.sh
     sudo sed -i "s|ifconfig eth0 192\.168\.1\.13 netmask 255\.255\.255\.0 up|ifconfig $val_source $ip_address netmask $subnet_mask up|" hostapd_script.sh
     sudo awk '{ sub(/ifconfig br0 192\.168\.1\.2 netmask 255\.255\.255\.0/, "ifconfig br0 " $modified_ip ".2 netmask " $subnet_mask); print }' hostapd_script.sh > hostapd_script.tmp && sudo mv hostapd_script.tmp hostapd_script.sh
-    sudo awk '{ sudo sed -i "s|dhcp-range=192\.168\.1\.3,192\.168\.1\.100,255\.255\.255\.0,12h|dhcp-range='$modified_ip.3,$modified_ip.100,$subnet_mask,12h'|" dnsmasq.conf
+    sudo sed -i "s|dhcp-range=192\.168\.1\.3,192\.168\.1\.100,255\.255\.255\.0,12h|dhcp-range='$modified_ip.3,$modified_ip.100,$subnet_mask,12h'|" dnsmasq.conf
     answer=""
     read -p "Do you want to rm wpa_supplicant.conf ? (y/n) " answer
     if [ "$answer" = "y" ]; then
